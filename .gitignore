@@ -8,6 +8,7 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/*
 *.iws
 *.iml
 *.ipr
@@ -39,8 +40,8 @@ build/
 
 /logs
 
-.idea
-.smarttomcat
+/.idea/*
+/.smarttomcat/*
 
 /C
 

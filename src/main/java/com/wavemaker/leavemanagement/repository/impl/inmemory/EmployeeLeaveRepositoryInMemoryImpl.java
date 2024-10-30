@@ -2,7 +2,6 @@ package com.wavemaker.leavemanagement.repository.impl.inmemory;
 
 import com.wavemaker.leavemanagement.constants.LeaveRequestStatus;
 import com.wavemaker.leavemanagement.exception.ServerUnavailableException;
-import com.wavemaker.leavemanagement.model.Employee;
 import com.wavemaker.leavemanagement.model.EmployeeLeave;
 import com.wavemaker.leavemanagement.model.LeaveRequest;
 import com.wavemaker.leavemanagement.repository.EmployeeLeaveRepository;
@@ -11,17 +10,18 @@ import com.wavemaker.leavemanagement.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Repository("EmployeeLeaveRepositoryInMemory")
 public class EmployeeLeaveRepositoryInMemoryImpl implements EmployeeLeaveRepository {
-    private static ConcurrentHashMap<Integer, EmployeeLeave> employeeLeaveMap = new ConcurrentHashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(EmployeeLeaveRepositoryInMemoryImpl.class);
+    private static ConcurrentHashMap<Integer, EmployeeLeave> employeeLeaveMap = new ConcurrentHashMap<>();
     @Autowired
     private LeaveTypeRepository leaveTypeRepository;
 
@@ -49,7 +49,7 @@ public class EmployeeLeaveRepositoryInMemoryImpl implements EmployeeLeaveReposit
 //        return new ArrayList<>(employeeLeaveMap.values());
         return employeeLeaveMap.values()
                 .stream()
-                .filter(leave -> leave.getEmployeeId() == empId &&leave.getStatus().equals(String.valueOf(status)))
+                .filter(leave -> leave.getEmployeeId() == empId && leave.getStatus().equals(String.valueOf(status)))
                 .collect(Collectors.toList());
     }
 
@@ -75,7 +75,7 @@ public class EmployeeLeaveRepositoryInMemoryImpl implements EmployeeLeaveReposit
     public List<EmployeeLeave> getLeavesOfEmployees(List<Integer> employeeIds, LeaveRequestStatus status) throws ServerUnavailableException {
         return employeeLeaveMap.values()
                 .stream()
-                .filter(leave -> employeeIds.contains(leave.getEmployeeId())&&leave.getStatus().equals(String.valueOf(status)))
+                .filter(leave -> employeeIds.contains(leave.getEmployeeId()) && leave.getStatus().equals(String.valueOf(status)))
                 .collect(Collectors.toList());
     }
 

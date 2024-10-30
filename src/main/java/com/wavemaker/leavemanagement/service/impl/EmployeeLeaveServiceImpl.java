@@ -2,21 +2,24 @@ package com.wavemaker.leavemanagement.service.impl;
 
 import com.wavemaker.leavemanagement.constants.LeaveRequestStatus;
 import com.wavemaker.leavemanagement.exception.ServerUnavailableException;
-import com.wavemaker.leavemanagement.factory.EmployeeLeaveRepositoryGlobalInstance;
 import com.wavemaker.leavemanagement.model.EmployeeLeave;
 import com.wavemaker.leavemanagement.model.LeaveRequest;
 import com.wavemaker.leavemanagement.repository.EmployeeLeaveRepository;
 import com.wavemaker.leavemanagement.service.EmployeeLeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class EmployeeLeaveServiceImpl implements EmployeeLeaveService {
-    @Autowired
-    private  EmployeeLeaveRepository employeeLeaveRepository;
 
-    // Constructor to inject UserCookieTaskRepository
+    @Autowired
+    @Qualifier("employeeLeaveRepositoryImpl")
+    private EmployeeLeaveRepository employeeLeaveRepository;
+
 
     @Override
     public LeaveRequest applyLeave(EmployeeLeave leaveRequest) throws ServerUnavailableException {

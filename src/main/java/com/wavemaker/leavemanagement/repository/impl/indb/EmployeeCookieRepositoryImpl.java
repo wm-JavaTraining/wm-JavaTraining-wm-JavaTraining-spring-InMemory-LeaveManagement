@@ -4,12 +4,14 @@ import com.wavemaker.leavemanagement.repository.EmployeeCookieRepository;
 import com.wavemaker.leavemanagement.util.DbConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class EmployeeCookieRepositoryImpl implements EmployeeCookieRepository {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeCookieRepositoryImpl.class);
     private static final String INSERT_INTO_COOKIE = "INSERT INTO COOKIE (COOKIE_NAME, COOKIE_VALUE, LOGIN_ID) VALUES (?, ?, ?)";

@@ -11,13 +11,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebFilter("/employee/leave/*")
+@Component
 public class AuthenticationFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
     private static EmployeeCookieService employeeCookieService;
     private static Gson gson = null;
 
@@ -46,11 +49,18 @@ public class AuthenticationFilter implements Filter {
                 String jsonResponse = gson.toJson("Authentication required. Redirecting to login.");
                 writeResponse(httpServletResponse, jsonResponse);
             }
-        } catch (ServletException | IOException e) {
+////        } catch (ServletException | IOException e) {
+//            logger.error("Error during authentication", e);
+//            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            String jsonResponse = gson.toJson("An error occurred during authentication.");
+//            writeResponse(httpServletResponse, jsonResponse);
+        } catch (Exception e) {
             logger.error("Error during authentication", e);
-            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            String jsonResponse = gson.toJson("An error occurred during authentication.");
-            writeResponse(httpServletResponse, jsonResponse);
+//            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            String jsonResponse = gson.toJson("An error occurred during authentication.");
+//            writeResponse(httpServletResponse, jsonResponse);
+
+
         }
     }
 

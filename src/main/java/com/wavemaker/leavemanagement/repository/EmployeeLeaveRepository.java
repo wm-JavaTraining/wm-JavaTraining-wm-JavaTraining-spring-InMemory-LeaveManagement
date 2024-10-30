@@ -8,6 +8,7 @@ import com.wavemaker.leavemanagement.model.LeaveRequest;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public interface EmployeeLeaveRepository {
     public LeaveRequest applyLeave(EmployeeLeave leaveRequest) throws ServerUnavailableException;
 

@@ -1,7 +1,5 @@
 package com.wavemaker.leavemanagement.model;
 
-import java.util.Optional;
-
 public class EmployeeLeaveSummary {
 
     private int summaryId;

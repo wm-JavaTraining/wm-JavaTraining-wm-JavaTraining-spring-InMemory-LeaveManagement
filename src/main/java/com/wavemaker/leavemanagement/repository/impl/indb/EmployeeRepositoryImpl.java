@@ -8,6 +8,7 @@ import com.wavemaker.leavemanagement.model.EmployeeManager;
 import com.wavemaker.leavemanagement.repository.EmployeeRepository;
 import com.wavemaker.leavemanagement.util.DbConnection;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
     private static final String FIND_EMPLOYEES_BY_MANAGER_QUERY =
             "SELECT * FROM EMPLOYEE WHERE MANAGER_ID = ?";
@@ -137,7 +139,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                                 employee.setPhoneNumber(employeeResultSet.getLong("PHONE_NUMBER"));
                                 employee.setManagerId(employeeResultSet.getInt("MANAGER_ID"));
                                 employee.setGender(employeeResultSet.getString("GENDER"));
-                                return  employee;
+                                return employee;
                                 // Set other fields as necessary
                             }
                         }

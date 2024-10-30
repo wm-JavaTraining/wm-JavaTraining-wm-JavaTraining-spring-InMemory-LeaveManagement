@@ -36,6 +36,7 @@ public class EmployeeLeaveSummaryRepositoryImpl implements EmployeeLeaveSummaryR
 
     private static final String SELECT_EMPLOYEE_LEAVE_SUMMARY_QUERY =
             "SELECT " +
+                    "ELS.SUMMARY_ID, " +
                     "    ELS.EMPLOYEE_ID, " +
                     "    ELS.LEAVE_TYPE_ID, " +
                     "    LT.TYPE_NAME AS LEAVE_TYPE_NAME, " +
@@ -52,12 +53,14 @@ public class EmployeeLeaveSummaryRepositoryImpl implements EmployeeLeaveSummaryR
                     "    E.EMPLOYEE_ID = ? " +
                     "GROUP BY " +
                     "    E.EMPLOYEE_ID, " +
+                    "   ELS.SUMMARY_ID," +
                     "    ELS.LEAVE_TYPE_ID, " +
                     "    LT.TYPE_NAME, " +
                     "    LT.LIMIT_FOR_LEAVES;";
 
     private static final String SELECT_TEAM_LEAVE_SUMMARY_QUERY =
             "SELECT " +
+                    "ELS.SUMMARY_ID, " +
                     "    E.EMPLOYEE_ID, " +
                     "    E.NAME AS EMPLOYEE_NAME, " +
                     "    ELS.LEAVE_TYPE_ID, " +
@@ -75,6 +78,7 @@ public class EmployeeLeaveSummaryRepositoryImpl implements EmployeeLeaveSummaryR
                     "    E.EMPLOYEE_ID IN %s " +
                     "GROUP BY " +
                     "    E.EMPLOYEE_ID, " +
+                    "   ELS.SUMMARY_ID," +
                     "    E.NAME, " +
                     "    ELS.LEAVE_TYPE_ID, " +
                     "    LT.TYPE_NAME, " +
@@ -108,7 +112,7 @@ public class EmployeeLeaveSummaryRepositoryImpl implements EmployeeLeaveSummaryR
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     EmployeeLeaveSummary summary = new EmployeeLeaveSummary();
-
+                    summary.setSummaryId(rs.getInt("SUMMARY_ID"));
                     summary.setEmployeeId(rs.getInt("EMPLOYEE_ID"));
                     summary.setLeaveTypeId(rs.getInt("LEAVE_TYPE_ID"));
                     summary.setLeaveType(rs.getString("LEAVE_TYPE_NAME"));
@@ -162,7 +166,7 @@ public class EmployeeLeaveSummaryRepositoryImpl implements EmployeeLeaveSummaryR
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     EmployeeLeaveSummary summary = new EmployeeLeaveSummary();
-
+                    summary.setSummaryId(rs.getInt("SUMMARY_ID"));
                     summary.setEmployeeId(rs.getInt("EMPLOYEE_ID"));
                     summary.setLeaveTypeId(rs.getInt("LEAVE_TYPE_ID"));
                     summary.setLeaveType(rs.getString("LEAVE_TYPE_NAME"));

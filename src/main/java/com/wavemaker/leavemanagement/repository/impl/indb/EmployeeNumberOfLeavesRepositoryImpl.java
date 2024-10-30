@@ -2,12 +2,14 @@ package com.wavemaker.leavemanagement.repository.impl.indb;
 
 import com.wavemaker.leavemanagement.repository.EmployeeNumberOfLeavesRepository;
 import com.wavemaker.leavemanagement.util.DbConnection;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class EmployeeNumberOfLeavesRepositoryImpl implements EmployeeNumberOfLeavesRepository {
 
     // Corrected SQL query to match the updated schema

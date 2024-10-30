@@ -4,46 +4,35 @@ import com.google.gson.Gson;
 import com.wavemaker.leavemanagement.model.LoginCredential;
 import com.wavemaker.leavemanagement.service.EmployeeCookieService;
 import com.wavemaker.leavemanagement.service.LoginCredentialService;
-import com.wavemaker.leavemanagement.service.impl.EmployeeCookieServiceImpl;
-import com.wavemaker.leavemanagement.service.impl.LoginCredentialServiceImpl;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.UUID;
 
-@WebServlet("/login")
+@RestController
+@RequestMapping("/login")
+public class LoginCredentialServlet {
+    private static Gson gson = new Gson();
+    @Autowired
+    private LoginCredentialService loginCredentialService;
+    @Autowired
+    private EmployeeCookieService employeeCookieService;
 
-public class LoginCredentialServlet extends HttpServlet {
-    private static Gson gson;
-    private static LoginCredentialService loginCredentialService;
-    private static EmployeeCookieService employeeCookieService;
 
-    @Override
-    public void init() {
-        gson = new Gson();
-        loginCredentialService = new LoginCredentialServiceImpl();
-        employeeCookieService = new EmployeeCookieServiceImpl();
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        try {
-            authenticate(request, response);
-        } catch (ServletException | IOException e) {
-            writeResponse(response, gson.toJson("An error occurred while processing your request."));
-        }
-    }
-
-    private void authenticate(HttpServletRequest request, HttpServletResponse response)
+    @PostMapping()
+    private void authenticate(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "emailId", required = true) String emailId, @RequestParam(value = "password", required = true) String password)
             throws IOException, ServletException {
-        String emailId = request.getParameter("emailId");
-        String password = request.getParameter("password");
         if (emailId == null || password == null) {
             writeResponse(response, gson.toJson("Missing required parameters."));
             return;
@@ -68,7 +57,7 @@ public class LoginCredentialServlet extends HttpServlet {
                 loginCredential.setLoginId(loginId);
                 employeeCookieService.addCookie(cookieValue, loginId);
                 writeResponse(response, "User  login with correct authentication.");
-                response.sendRedirect("index.html");
+                // response.sendRedirect("index.html");
             } else {
                 writeResponse(response, "User  login with incorrect authentication.");
                 response.sendRedirect("login.html?error=" + URLEncoder.encode("Invalid username or password.", "UTF-8"));

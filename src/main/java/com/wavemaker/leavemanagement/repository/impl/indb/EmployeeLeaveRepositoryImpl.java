@@ -10,12 +10,14 @@ import com.wavemaker.leavemanagement.util.DbConnection;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
+@Repository("employeeLeaveRepositoryImpl")
 public class EmployeeLeaveRepositoryImpl implements EmployeeLeaveRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeLeaveRepositoryImpl.class);

@@ -1,15 +1,15 @@
 package com.wavemaker.leavemanagement.service.impl;
 
 import com.wavemaker.leavemanagement.repository.EmployeeNumberOfLeavesRepository;
-import com.wavemaker.leavemanagement.repository.impl.indb.EmployeeNumberOfLeavesRepositoryImpl;
 import com.wavemaker.leavemanagement.service.EmployeeNumberOfLeavesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmployeeNumberOfLeavesServiceImpl implements EmployeeNumberOfLeavesService {
-    private final EmployeeNumberOfLeavesRepository employeeNumberOfLeavesRepository;
+    @Autowired
+    private EmployeeNumberOfLeavesRepository employeeNumberOfLeavesRepository;
 
-    public EmployeeNumberOfLeavesServiceImpl() {
-        this.employeeNumberOfLeavesRepository = new EmployeeNumberOfLeavesRepositoryImpl();
-    }
 
     @Override
     public int getNoOfLeaves(int employeeId) {

@@ -39,8 +39,8 @@ build/
 
 /logs
 
-/.idea
+.idea
+.smarttomcat
 
 /C
 
-/.smarttomcat
